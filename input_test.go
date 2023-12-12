@@ -10,7 +10,9 @@ type TestData struct {
 }
 
 func TestEvaluateInput(t *testing.T) {
-	rates, _ := getData()
+    cacheData := readFromCache()
+	rates := castRateFromLatest(cacheData)
+
 	allTestData := []TestData{
 		{
 			Inputs: []string{
