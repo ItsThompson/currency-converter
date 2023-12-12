@@ -25,7 +25,7 @@ This project is a command-line tool that uses the [Open Exchange Rates API](http
 
 ## Showcase
 
-
+https://github.com/ItsThompson/currency-converter/assets/33135895/973473d3-9aac-438b-8873-1635c5b91dd8
 
 ## Usage
 ### Getting Started 
