@@ -23,3 +23,13 @@ func convert(dataInput DataInput, rates map[string]float64) float64 {
 
 	return math.Round(conversion*(math.Pow10(precision))) / math.Pow10(precision)
 }
+
+func checkValidCurrency(rates map[string]float64, currency string) bool {
+	// Checks if currency string is in array
+	for key := range rates {
+		if currency == key {
+			return true
+		}
+	}
+	return false
+}

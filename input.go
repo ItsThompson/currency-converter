@@ -9,6 +9,12 @@ import (
 	"unicode"
 )
 
+type DataInput struct {
+	Value        float64
+	CurrencyFrom string
+	CurrencyTo   string
+}
+
 func getInput() string {
 
 	reader := bufio.NewReader(os.Stdin)
@@ -37,8 +43,8 @@ func formatInput(input string) []string {
 	}
 
 	var separateIntegerFromNumber = func(input string) []string {
-		// Initalizes at 0
 		var i int
+
 		for i < len(input) && unicode.IsDigit(rune(input[i])) {
 			i++
 		}
@@ -67,17 +73,16 @@ func formatInput(input string) []string {
 
 func inputWrapper(rates map[string]float64) DataInput {
 	var input DataInput
-
     rawInput := getInput()
-	formattedInput := formatInput(rawInput)
+    formattedInput := formatInput(rawInput)
 
-	for i := 0; i < len(formattedInput); i++ {
-        if input.Value == 0 {
-            val, err := strconv.ParseFloat(formattedInput[i], 64)
-            if err == nil {
-                input.Value = val
-            }
-        }
+    for i := 0; i < len(formattedInput); i++ {
+		if input.Value == 0 {
+			val, err := strconv.ParseFloat(formattedInput[i], 64)
+			if err == nil {
+				input.Value = val
+			}
+		}
 		if checkValidCurrency(rates, formattedInput[i]) {
 			currentWord := formattedInput[i]
 			if input.CurrencyFrom == "" {
@@ -88,14 +93,14 @@ func inputWrapper(rates map[string]float64) DataInput {
 		}
 	}
 
-    // If the user didn't specify value, value is 1
-    if input.Value == 0 {
-        input.Value = 1
-    }
+	// If the user didn't specify value, value is 1
+	if input.Value == 0 {
+		input.Value = 1
+	}
 
-    if input.CurrencyFrom == "" || input.CurrencyTo == ""{
-        // Missing Inputs
-        return inputWrapper(rates)
-    } 
+	if input.CurrencyFrom == "" || input.CurrencyTo == "" {
+		// Missing Inputs
+		return inputWrapper(rates)
+	}
 	return input
 }

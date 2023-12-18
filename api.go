@@ -4,21 +4,21 @@ import (
 	"encoding/json"
 	"io"
 	"log"
+    "errors"
 	"net/http"
 )
 
 // REF: https://tutorialedge.net/golang/consuming-restful-api-with-go/
-func getLastestExchangeRates() Latest {
+func useApi() (Latest, error) {
 	var apiEndPoint string = "https://openexchangerates.org/api/latest.json?app_id="
 	var appID string = goDotEnvVariable("APP_ID")
+    var result Latest
 	apiEndPoint = apiEndPoint + appID
 
 	response, err := http.Get(apiEndPoint)
 
 	if err != nil {
-        // Error in Get Request -> Use Cache
-        cacheData := readFromCache()
-        return cacheData
+		return result, errors.New("Get Request Failed")
 	}
 
 	responseData, err := io.ReadAll(response.Body)
@@ -28,8 +28,7 @@ func getLastestExchangeRates() Latest {
 
 	writeToCache(responseData, fileName)
 
-	var result Latest
 	json.Unmarshal([]byte(responseData), &result)
 
-	return result
+	return result, nil
 }
