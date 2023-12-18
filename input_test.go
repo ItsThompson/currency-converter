@@ -10,7 +10,7 @@ type TestData struct {
 }
 
 func TestEvaluateInput(t *testing.T) {
-    cacheData := readFromCache()
+	cacheData := readFromCache()
 	rates := castRateFromLatest(cacheData)
 
 	allTestData := []TestData{
@@ -46,7 +46,7 @@ func TestEvaluateInput(t *testing.T) {
 
 	for _, testData := range allTestData {
 		for _, input := range testData.Inputs {
-			evalOutput := evaluateInput(rates, input)
+			evalOutput := inputWrapper(rates)
 			if testData.Output != evalOutput {
 				t.Errorf(`FAILED: evaluateInput(rates, %v) Expected %v, got %v.`, input, testData.Output, evalOutput)
 			} else {

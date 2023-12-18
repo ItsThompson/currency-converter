@@ -5,7 +5,30 @@ import (
 	"fmt"
 	"io"
 	"os"
+    "errors"
 )
+
+
+
+// NOTE: Adapts a "cache agnostic" model for calling data
+//       See: https://github.com/ItsThompson/currency-converter/issues/1
+func useCache(now int64, force bool) (Latest, error) {
+	var latestData Latest
+	cacheExists := checkIfCacheExist(fileName)
+
+	if cacheExists {
+		cacheData := readFromCache()
+		secondsElapsed := now - cacheData.Timestamp
+		if force || secondsElapsed <= cacheExpiry {
+			latestData = cacheData
+			return latestData, nil
+		} else {
+			return latestData, errors.New("Cache expired")
+		}
+	} else {
+		return latestData, errors.New("Cache does not exist")
+	}
+}
 
 func checkIfCacheExist(fileName string) bool {
 	_, err := os.Stat(fileName)
@@ -17,13 +40,6 @@ func checkIfCacheExist(fileName string) bool {
 		return false
 	} else {
 		return false
-	}
-}
-
-func writeToCache(data []byte, fileName string) {
-	err := os.WriteFile(fileName, data, 0644)
-	if err != nil {
-		panic(err)
 	}
 }
 
@@ -39,3 +55,12 @@ func readFromCache() Latest {
 	json.Unmarshal([]byte(responseData), &latest)
 	return latest
 }
+
+
+func writeToCache(data []byte, fileName string) {
+	err := os.WriteFile(fileName, data, 0644)
+	if err != nil {
+		panic(err)
+	}
+}
+
