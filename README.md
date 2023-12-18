@@ -36,7 +36,20 @@ https://github.com/ItsThompson/currency-converter/assets/33135895/973473d3-9aac-
 
 APP_ID=<APP_ID>
 ```
-3. Run the CLI program using `go run .`
+3. In addition to the `APP_ID`, add the following constants
+    - `FILE_NAME`: Cache file name.
+    - `CACHE_EXPIRY_IN_SECONDS`: Expiry time for cache in seconds.
+    - `PRECISION`: Level of precision in output's digits.
+
+```
+# Example .env
+
+APP_ID=<APP_ID>
+FILE_NAME=cache.json
+CACHE_EXPIRY_IN_SECONDS=300
+PRECISION=2
+```
+4. Run the CLI program using `go run .`
 ### Running Executable
 1. Build the executable 
 ```
