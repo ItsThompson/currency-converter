@@ -7,6 +7,10 @@ import (
 )
 
 func main() {
+    if checkForForce(){
+        fmt.Println("Conversion is forced to update from API")
+    }
+
     for true {
         var now int64 = time.Now().Unix()
 

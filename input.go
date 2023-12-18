@@ -26,7 +26,15 @@ func getInput() string {
 		return getInput()
 	}
 
+    checkForQuitSequence(rawInput)
+
 	return rawInput
+}
+
+func checkForQuitSequence(input string) {
+    if input == ":q\n" {
+        os.Exit(0)
+    }
 }
 
 func formatInput(input string) []string {
