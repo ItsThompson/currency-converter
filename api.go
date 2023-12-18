@@ -10,8 +10,9 @@ import (
 
 // REF: https://tutorialedge.net/golang/consuming-restful-api-with-go/
 func useApi() (Latest, error) {
+    fileName := getEnvVar("FILE_NAME")
 	var apiEndPoint string = "https://openexchangerates.org/api/latest.json?app_id="
-	var appID string = goDotEnvVariable("APP_ID")
+	var appID string = getEnvVar("APP_ID")
     var result Latest
 	apiEndPoint = apiEndPoint + appID
 

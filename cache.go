@@ -14,11 +14,14 @@ import (
 //       See: https://github.com/ItsThompson/currency-converter/issues/1
 func useCache(now int64, force bool) (Latest, error) {
 	var latestData Latest
+    fileName := getEnvVar("FILE_NAME")
+
 	cacheExists := checkIfCacheExist(fileName)
 
 	if cacheExists {
 		cacheData := readFromCache()
 		secondsElapsed := now - cacheData.Timestamp
+        cacheExpiry := getIntEnvVar("CACHE_EXPIRY_IN_SECONDS")
 		if force || secondsElapsed <= cacheExpiry {
 			latestData = cacheData
 			return latestData, nil
@@ -45,6 +48,7 @@ func checkIfCacheExist(fileName string) bool {
 
 func readFromCache() Latest {
 	var latest Latest
+    fileName := getEnvVar("FILE_NAME")
 	jsonFile, err := os.Open(fileName)
 	if err != nil {
 		fmt.Println(err)
