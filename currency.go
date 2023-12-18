@@ -5,6 +5,7 @@ import "math"
 func convert(dataInput DataInput, rates map[string]float64) float64 {
 
 	var conversion float64
+    precision := int(getIntEnvVar("PRECISION"))
 
 	var convertFromUsd = func(value float64, targetRate float64) float64 {
 		var convertedValue float64 = value * targetRate

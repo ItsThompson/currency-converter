@@ -6,13 +6,6 @@ import (
     "os"
 )
 
-
-//TODO: .env variables and place globals closer to concern
-var fileName string = "cache.json"
-var cacheExpiry int64 = 300
-var precision int = 2
-
-
 func main() {
     for true {
         var now int64 = time.Now().Unix()
